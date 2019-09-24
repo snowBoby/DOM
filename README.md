@@ -66,6 +66,24 @@ childNodes [someNode.childNodes.length-1]
     2. ***removeNamedItem***(name)：从列表中移除 nodeName 属性等于 name 的节点；removeAttribute()方法的效果相同，区别：即 removeNamedItem()返回表示被删除特性的 Attr 节点
     3. ***setNamedItem***(newAttrNode)：通过属性节点createAttribute，设置新属性。
     4. ***item***(pos)：返回位于数字 pos 位置处的节点。
-    5. ***attributes***[i].specified：每个特性节点都有该属性，为 true，则意味着要么是在 HTML 中指定了相应特性，要么是通过 setAttribute()方法设置了该特性。在 IE 中，所有未设置过的特性的该属性值都为 false，而在其他浏览器中根本不会为这类特性生成对应的特性节点（因此，在这些浏览器中，任何特性节点的 specified 值始终为 true）。针对IE7 及更早的版本会返回 HTML 元素中所有可能的特性，包括没有指定的特性。
-    
+    5. ***attributes[i].specified***：每个特性节点都有该属性，为 true，则意味着要么是在 HTML 中指定了相应特性，要么是通过 setAttribute()方法设置了该特性。在 IE 中，所有未设置过的特性的该属性值都为 false，而在其他浏览器中根本不会为这类特性生成对应的特性节点（因此，在这些浏览器中，任何特性节点的 specified 值始终为 true）。针对IE7 及更早的版本会返回 HTML 元素中所有可能的特性，包括没有指定的特性。
+## 节点样式操作
+
+* **classList**：classList 属性是新集合类型 DOMTokenList 的实例。与其他 DOM 集合类似，有length 属性，而要取得每个元素可以使用 ***item***()方法，也可以使用方括号语法。
+    1. ***add***()：将给定的字符串值添加到列表中。如果值已经存在，就不添加了。
+    2. ***remove***()：从列表中删除给定的字符串。
+    3. ***toggle***()：若存在删除，不存在添加他。
+    4. ***contains***()：返回Boolean值
+* **style**：获取的是行内样式，有length 属性，而要取得每个元素可以使用 ***item***()方法，也可以使用方括号语法。注意：float是保留字，要用cssFloat/styleFloat（ie）来获取
+    1. ***cssText***：行内样式字符串
+    2. ***item***(index)：返回给定位置的 CSS 属性的名称
+    3. ***getPropertyValue***(propertyName)：返回给定属性的字符串值
+    4. ***getPropertyPriority***(propertyName)：如果给定的属性使用了!important 设置，则返回"important"；否则，返回空字符串
+    5. ***removeProperty***(propertyName)：从样式中删除给定属性
+    6. ***setProperty***(propertyName,value,priority)：将给定属性设置为相应的值，并加上优先权标志（"important"或者一个空字符串）
+
+以下获取层叠样式：
+* **document.defaultView.getComputedStyle**()：要取得计算样式的元素和一个伪元素字符串（例如":after"）。如果不需要伪元素信息，第二个参数可以是 null。
+* **style.currentStyle**：ie写法
+* **document.styleSheets**：获取样式表
 ![image](https://github.com/snowBoby/DOM/blob/master/images/client.png)
