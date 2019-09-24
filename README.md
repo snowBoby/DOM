@@ -1,5 +1,9 @@
 # DOM
+DOM 操作往往是 JavaScript 程序中开销最大的部分，而因访问 NodeList 导致的问题为最多。NodeList 对象都是“动态的”，这就意味着每次访问NodeList 对象，都会运行一次查询。有鉴于此，最好的办法就是尽量减少 DOM 操作。
 ## Node类型
+提供了所有节点类型，除了ie之外，其他浏览器都有提供此接口。所以用的时候直接用数值someNode.nodeType == 1
+![image](https://github.com/snowBoby/DOM/blob/master/images/nodeType1.png)
+![image](https://github.com/snowBoby/DOM/blob/master/images/nodeType2.png)
 ## 节点信息
 每种node类型所对应下面的三种信息都不相同:
 * nodeType：节点类型
@@ -107,8 +111,8 @@ Safari 和 Chrome 实现了这个方法。
 ![image](https://github.com/snowBoby/DOM/blob/master/images/offset.png)
 
 客户区大小：
-* **clientWidth**：元素内容区宽度加上左右内边距宽度，window.innerWidth === document.documentElement.clientWidth === document.body.clientWidth
 * **clientHeight**
+* **clientWidth**：元素内容区宽度加上左右内边距宽度，window.innerWidth === document.documentElement.clientWidth === document.body.clientWidth
 ![image](https://github.com/snowBoby/DOM/blob/master/images/client.png)
 
 滚动大小：
@@ -124,3 +128,69 @@ Safari 和 Chrome 实现了这个方法。
 
 `*注意*：对于不包含滚动条的页面而言， scrollWidth 和 scrollHeight 与 clientWidth 和clientHeight 之间的关系并不十分清晰。【1】Firefox 中这两组属性始终都是相等的，但大小代表的是文档内容区域的实际尺寸，而非视口的尺寸【2】Opera、Safari 3.1 及更高版本、Chrome 中的这两组属性是有差别的，其中 scrollWidth 和scrollHeight 等于视口大小，而 clientWidth 和 clientHeight 等于文档内容区域的大小【3】IE（在标准模式）中的这两组属性不相等，其中 scrollWidth 和 scrollHeight 等于文档内容区域的大小，而 clientWidth 和 clientHeight 等于视口大小。因此，在确定文档的总高度时（包括基于视口的最小高度时），必须取得 scrollWidth/clientWidth 和scrollHeight/clientHeight 中的最大值，才能保证在跨浏览器的环境下得到精确的结果`
 
+## document
+创建节点：
+
+* **createElement**()：只接受一个参数，即要创建元素的标签名
+* **createAttribute**()：传入特性的名称可以创建新的特性节点。
+* **createTextNode**()：创建文本节点
+* **createCDataSection**()：只在XML 文档中使用
+* **createComment**()：创建注释节点
+* **createDocumentFragment**()：创建文档片段，不是文档树的一部分。
+
+文档获取节点：
+
+* **getElementById**()：ie<7如果有哪个表单元素的 name 特性等于指
+定的 ID，而且该元素在文档中位于带有给定 ID 的元素前面，那么 IE 就会返回那个表单元素。
+* **getElementsByTagName**()：返回HTMLCollection对象，类似nodeList对象，方括号、item()、namedItem()、还支持按名称访问项来访问，namedItem使用这个方法可以通过元素的 name特性取得集合中的项 images.namedItem("myImage")或images["myImage"]
+* **getElementsByName**()：与 getElementsByTagName()类似，namedItem()方法则只会取得第一项
+* **getElementsByClassName**()
+* **querySelector**()：通过 Document 类型调用 querySelector()方法时，会在文档元素的范围内查找匹配的元素。而
+通过 Element 类型调用 querySelector()方法时，只会在该元素后代元素的范围内查找匹配的元素。
+* **querySelectorAll**()：返回的是一个 NodeList 的实例
+
+文档获取节点快捷方式：
+
+* **doctype**：<!DOCTYPE>标签，支持差别很大
+* **documentElement**：html标签
+* **head**：HTML5 新增了 document.head 属性,document.head || document.getElementsByTagName("head")[0]
+* **body**：body标签
+* **title**：<title>元素中的文本
+* **images**：包含文档中所有的<img>元素
+* **forms**：包含文档中所有的<form>元素
+* **anchors**：包含文档中所有带 name 特性的<a>元素
+* **links**：包含文档中所有带 href 特性的<a>元素。
+* **charset**：表示文档中实际使用的字符集，
+也可以用来指定新字符集。
+* **defaultCharset**：表示根据默认浏览器及操作系统的设置，当前文档默认的字符集应该是什么
+
+网页请求相关：
+
+* **URL**：页面完整的 URL
+* **domain**：页面的域名
+* **referrer**：取得来源页面的 URL
+
+焦点管理：
+
+* **activeElement**：会引用 DOM 中当前获得了焦点的元素
+* **hasFocus**()：确定文档是否获得了焦点
+
+HTMLDocument新功能：
+
+* **readyState**：loading（正在加载文档）/complete（已经加载完文档）
+* **compatMode**：CSS1Compat（标准模式）/BackCompat（混杂模式）
+* **documentMode**：文档模式
+
+## table
+
+* caption
+* tHead
+* tBodies
+* tFoot
+* rows：保存着<tbody>元素中行的 HTMLCollection。
+* cells：保存着<tr>元素中单元格的 HTMLCollection。
+* createCaption()/deleteCaption()：创建<caption>元素，将其放到表格中，返回引用。
+* createTHead()/deleteTHead()
+* createTFoot()/deleteTFoot()
+* insertRow(pos)/deleteRow(pos)：向 rows 集合中的指定位置插入一行。返回对新插入行的引用
+* insertCell(pos)/deleteCell(pos)：向 cells 集合中的指定位置插入一个单元格，返回对新插入单元格的引用。
