@@ -86,4 +86,40 @@ childNodes [someNode.childNodes.length-1]
 * **document.defaultView.getComputedStyle**()：要取得计算样式的元素和一个伪元素字符串（例如":after"）。如果不需要伪元素信息，第二个参数可以是 null。
 * **style.currentStyle**：ie写法
 * **document.styleSheets**：获取样式表
+
+## 节点滚动
+
+* **scrollIntoView**()：true 或者不传入任何参数，那么窗口滚动
+之后会让调用元素的顶部与视口顶部尽可能平齐。如果传入 false 作为参数，调用元素会尽可能全部出现在视口中,由于 scrollIntoView()是唯一一个所有浏览器都支持的方法，因此还是这个方法最常用。
+* **scrollIntoViewIfNeeded**(alignCenter)：只在当前元素在视口中不可见的情况下，才滚动浏览器窗口或容器元素，最终让它可见。如果当前元素在视口中可见，这个方法什么也不做。如果将可选的 alignCenter 参数设置为 true，则表示尽量将元素显示在视口中部（垂直方向）。
+Safari 和 Chrome 实现了这个方法。
+*  **scrollByLines**(lineCount)：将元素的内容滚动指定的行高，lineCount 值可以是正值，也可以是负值。Safari 和 Chrome 实现了这个方法
+*  **scrollByPages**(pageCount)：将元素的内容滚动指定的页面高度，具体高度由元素的高度决定。Safari 和 Chrome 实现了这个方法。-1：往回滚动一页
+## 节点大小
+偏移量大小：
+
+* **offsetParent**：定位父级，【1】元素自身有fixed定位，offsetParent的结果为null，【2】父级有定位，为离自身元素最近的父级元素，否则为body
+* **offsetWidth**：同下
+* **offsetHeight**：包括元素的高度、（可见的）
+水平滚动条的高度、上边框高度和下边框高度。
+* **offsetTop**:同下
+* **offsetLeft**：元素的左外边框至offsetParent包含元素的左内边框之间的像素距离
+
+客户区大小：
+* **clientWidth**：元素内容区宽度加上左右内边距宽度，window.innerWidth === document.documentElement.clientWidth === document.body.clientWidth
+* **clientHeight**
+
+滚动大小：
+* **scrollWidth**：元素内容的总宽度
+* **scrollHeight**：元素内容的总高度
+* **scrollLeft**：被隐藏在内容区域左侧的像素数。通过设置这个属性可以改变元素的滚动位置
+* **scrollTop**：被隐藏在内容区域上方的像素数。通过设置这个属性可以改变元素的滚动位置
+
+确定元素大小：
+* **getBoundingClientRect**()：包含 4 个属性：left、top、right 和 bottom。这些属性给出了元素在页面中相对于视口的位置。有的浏览器还包括width、height、x、y。
+
+```
+*注意*：对于不包含滚动条的页面而言， scrollWidth 和 scrollHeight 与 clientWidth 和clientHeight 之间的关系并不十分清晰。【1】Firefox 中这两组属性始终都是相等的，但大小代表的是文档内容区域的实际尺寸，而非视口的尺寸【2】Opera、Safari 3.1 及更高版本、Chrome 中的这两组属性是有差别的，其中 scrollWidth 和scrollHeight 等于视口大小，而 clientWidth 和 clientHeight 等于文档内容区域的大小【3】IE（在标准模式）中的这两组属性不相等，其中 scrollWidth 和 scrollHeight 等于文档内容区域的大小，而 clientWidth 和 clientHeight 等于视口大小。因此，在确定文档的总高度时（包括基于视口的最小高度时），必须取得 scrollWidth/clientWidth 和scrollHeight/clientHeight 中的最大值，才能保证在跨浏览器的环境下得到精确的结果
+```
+
 ![image](https://github.com/snowBoby/DOM/blob/master/images/client.png)
