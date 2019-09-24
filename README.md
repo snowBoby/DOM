@@ -34,5 +34,23 @@ childNodes [someNode.childNodes.length-1]
 * **previousElementSibling**：指向前一个同辈元素；previousSibling 元素版
 * **nextElementSibling**：指向后一个同辈元素；nextSibling 的元素版。
 ![image](https://github.com/snowBoby/DOM/blob/master/images/nodeRelation.png)
-
+## 节点操作
+下面前四个都是基于父节点的操作：
+* **appendChild**()：向 childNodes 列表的末尾添加一个节点，返回新增的节点。
+* **insertBefore**(newNode,someNode)：要插入的节点和作为参照的节点，第二个参数为null，则 insertBefore()与 appendChild()执行相同的操作。
+* **removeChild**()：移除节点，返回被移除的节点
+* **replaceChild**(newNode,someNode)：要插入的节点和要替换的节点
+* **cloneNode(Boolean)**：参数为true，深复制，也就是复制节点及其整个子节点树；为false浅复制，即只复制节点本身，ie>9和其他浏览器 会为空白符也创建节点。这个方法只复制节点，其他一切都不会复制。IE 在此存在一个 bug，即它会复制事件处理程序，所以我们建议在复制之前最好先移除事件处理程序。
+* **normalize**()：多个文本节点合并成一个
+## 节点插入
+性能：在使用 innerHTML、outerHTML 属性和 insertAdjacentHTML()方法时，最好先手工删除要被替换的元素的所有事件处理程序和 JavaScript 对象属性。
+* **innerHTML**
+* **outerHTNL**
+* **innerText/textContent**：兼容ie两种写法。
+* **outerText**
+* **insertAdjacentHTML**(action,newNode字符串)：action有以下四种：
+    "beforebegin"：在当前元素之前插入一个紧邻的同辈元素；
+    "afterbegin"：在第一个子元素之前再插入新的子元素；
+    "beforeEnd"：在最后一个子元素之后再插入新的子元素；
+    "afterend"：在当前元素之后插入一个紧邻的同辈元素
 ![image](https://github.com/snowBoby/DOM/blob/master/images/client.png)
