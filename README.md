@@ -52,5 +52,20 @@ childNodes [someNode.childNodes.length-1]
     "beforebegin"：在当前元素之前插入一个紧邻的同辈元素；
     "afterbegin"：在第一个子元素之前再插入新的子元素；
     "beforeEnd"：在最后一个子元素之后再插入新的子元素；
-    "afterend"：在当前元素之后插入一个紧邻的同辈元素
+    "afterend"：在当前元素之后插入一个紧邻的同辈元素；
+    
+## 节点特性
+推荐：自定义属性用getAttribute、setAttribute、removeAttribute方式，非自定义用属性。
+* getAttribute()：传递给 getAttribute()的特性名与实际的特性名相同。因此要想得到 class 特性值，应该传入"class"而不是"className"。也可以取得自定义特性。补充：有两类特殊的特性,style和onclick，getAttribute()这俩返回的都是字符串，通过属性访问会得到style对象和js函数，由于存在这些差别，在通过 JS以编程方式操作 DOM 时，开发人员经常不使用 getAttribute()，而是只使用对象的属性。只有在取得自定义特性值的情况下，才会使用 getAttribute()方法。
+* **setAttribute**()：只有通过该属性，自定义特性才会变成元素的特性
+* **removeAttribute**()：移除某个特性。
+* **data-**：自定义数据属性，可以通过dataset获取数据
+* **attributes**：包含一个NamedNodeMap，与 NodeList 类似。
+
+    1. ***getNamedItem***(name)：也可以用方括号形式或属性名，返回 nodeName 属性等于 name 的节点，element.attributes.getNamedItem("id").nodeValue;
+    2. ***removeNamedItem***(name)：从列表中移除 nodeName 属性等于 name 的节点；removeAttribute()方法的效果相同，区别：即 removeNamedItem()返回表示被删除特性的 Attr 节点
+    3. ***setNamedItem***(newAttrNode)：通过属性节点createAttribute，设置新属性。
+    4. ***item***(pos)：返回位于数字 pos 位置处的节点。
+    5. ***attributes***[i].specified：每个特性节点都有该属性，为 true，则意味着要么是在 HTML 中指定了相应特性，要么是通过 setAttribute()方法设置了该特性。在 IE 中，所有未设置过的特性的该属性值都为 false，而在其他浏览器中根本不会为这类特性生成对应的特性节点（因此，在这些浏览器中，任何特性节点的 specified 值始终为 true）。针对IE7 及更早的版本会返回 HTML 元素中所有可能的特性，包括没有指定的特性。
+    
 ![image](https://github.com/snowBoby/DOM/blob/master/images/client.png)
