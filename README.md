@@ -40,7 +40,7 @@ childNodes [someNode.childNodes.length-1]
 ![image](https://github.com/snowBoby/DOM/blob/master/images/nodeRelation.png)
 ## 节点操作
 下面前四个都是基于父节点的操作：
-* **appendChild**()：向 childNodes 列表的末尾添加一个节点，返回新增的节点。
+* **appendChild**()：向 childNodes 列表的末尾添加一个节点，返回新增的节点。如果为 appendChild()方法传入一个文档中已有的元素，那么就会先从该元素的父节点中移除它，再把它添加到指定的位置。
 * **insertBefore**(newNode,someNode)：要插入的节点和作为参照的节点，第二个参数为null，则 insertBefore()与 appendChild()执行相同的操作。
 * **removeChild**()：移除节点，返回被移除的节点
 * **replaceChild**(newNode,someNode)：要插入的节点和要替换的节点
